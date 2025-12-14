@@ -31,7 +31,17 @@ registerRoutes(app);
 
 if (env.SWAGGER_ENABLED) {
   const document = getOpenApiDocument();
-  app.use("/docs", swaggerUi.serve, swaggerUi.setup(document));
+  // Swagger UI uses inline scripts/styles; remove CSP headers for this route only.
+  app.use(
+    "/docs",
+    (_req, res, next) => {
+      res.removeHeader("Content-Security-Policy");
+      res.removeHeader("Content-Security-Policy-Report-Only");
+      next();
+    },
+    swaggerUi.serve,
+    swaggerUi.setup(document)
+  );
 }
 
 app.use(notFoundHandler);

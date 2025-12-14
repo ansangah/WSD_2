@@ -8,9 +8,9 @@
   },
   "scripts": {
     "dev": "PRISMA_CLIENT_ENGINE_TYPE=binary ts-node-dev --respawn --transpile-only --files -r tsconfig-paths/register --project tsconfig.json src/main.ts",
-    "build": "tsc -p tsconfig.build.json && tsc-alias",
+    "build": "prisma generate && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "start": "PRISMA_CLIENT_ENGINE_TYPE=binary node dist/main.js",
-    "lint": "tsc --noEmit",
+    "lint": "tsc -p tsconfig.build.json --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:push": "prisma db push",
@@ -64,6 +64,7 @@
     "supertest": "^7.1.4",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
