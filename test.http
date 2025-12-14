@@ -1,0 +1,416 @@
+@baseUrl = http://localhost:8080
+@userToken = REPLACE_WITH_USER_JWT
+@adminToken = REPLACE_WITH_ADMIN_JWT
+@bookId = BOOK_ID
+@authorId = AUTHOR_ID
+@categoryId = CATEGORY_ID
+@reviewId = REVIEW_ID
+@commentId = COMMENT_ID
+@cartItemId = CART_ITEM_ID
+@wishlistBookId = WISHLIST_BOOK_ID
+@libraryEntryId = LIB_ENTRY_ID
+@orderId = ORDER_ID
+@userId = USER_ID
+
+### 01. Health Check
+GET {{baseUrl}}/health
+
+### 02. Auth - Login
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "P@ssw0rd!"
+}
+
+### 03. Auth - Refresh Token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "REPLACE_WITH_REFRESH_TOKEN"
+}
+
+### 04. Auth - Logout
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "REPLACE_WITH_REFRESH_TOKEN"
+}
+
+### 05. Activity Logs (Admin)
+GET {{baseUrl}}/activity-logs?page=1&size=20
+Authorization: Bearer {{adminToken}}
+
+### 06. Authors - List
+GET {{baseUrl}}/authors?page=1&size=10
+
+### 07. Authors - Detail
+GET {{baseUrl}}/authors/{{authorId}}
+
+### 08. Books - List
+GET {{baseUrl}}/books?page=1&size=10&sort=createdAt&order=desc
+
+### 09. Books - Detail
+GET {{baseUrl}}/books/{{bookId}}
+
+### 10. Books - Reviews List
+GET {{baseUrl}}/books/{{bookId}}/reviews?page=1&size=5&sort=createdAt
+
+### 11. Books - Create Review
+POST {{baseUrl}}/books/{{bookId}}/reviews
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "rating": 5,
+  "title": "Great book",
+  "body": "Loved every chapter."
+}
+
+### 12. Books - Related
+GET {{baseUrl}}/books/{{bookId}}/related
+
+### 13. Admin Books - Create
+POST {{baseUrl}}/admin/books
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "isbn13": "9781234567890",
+  "title": "New Book",
+  "description": "Description here",
+  "price": "19.99",
+  "stock": 50,
+  "languageCode": "en",
+  "pageCount": 320,
+  "coverUrl": "https://example.com/cover.jpg",
+  "publishedAt": "2024-01-01T00:00:00.000Z",
+  "categoryIds": [],
+  "authorIds": []
+}
+
+### 14. Admin Books - Update
+PATCH {{baseUrl}}/admin/books/{{bookId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "title": "Updated Title",
+  "stock": 45
+}
+
+### 15. Admin Books - Archive
+DELETE {{baseUrl}}/admin/books/{{bookId}}
+Authorization: Bearer {{adminToken}}
+
+### 16. Cart - Get or Create
+GET {{baseUrl}}/carts/me
+Authorization: Bearer {{userToken}}
+
+### 17. Cart - Add Item
+POST {{baseUrl}}/carts/me/items
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "bookId": "{{bookId}}",
+  "quantity": 1
+}
+
+### 18. Cart - Update Quantity
+PATCH {{baseUrl}}/carts/me/items/{{cartItemId}}
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "quantity": 2
+}
+
+### 19. Cart - Remove Item
+DELETE {{baseUrl}}/carts/me/items/{{cartItemId}}
+Authorization: Bearer {{userToken}}
+
+### 20. Cart - Clear All
+DELETE {{baseUrl}}/carts/me
+Authorization: Bearer {{userToken}}
+
+### 21. Categories - List
+GET {{baseUrl}}/categories
+
+### 22. Categories - Create
+POST {{baseUrl}}/categories
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "New Category",
+  "parentId": null
+}
+
+### 23. Categories - Detail
+GET {{baseUrl}}/categories/{{categoryId}}
+
+### 24. Categories - Update
+PATCH {{baseUrl}}/categories/{{categoryId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Category"
+}
+
+### 25. Categories - Delete
+DELETE {{baseUrl}}/categories/{{categoryId}}
+Authorization: Bearer {{adminToken}}
+
+### 26. Categories - Books
+GET {{baseUrl}}/categories/{{categoryId}}/books
+
+### 27. Comments - List for Review
+GET {{baseUrl}}/reviews/{{reviewId}}/comments?page=1&size=5
+
+### 28. Comments - Create
+POST {{baseUrl}}/reviews/{{reviewId}}/comments
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "body": "Nice review!",
+  "parentCommentId": null
+}
+
+### 29. Comments - Update Own
+PATCH {{baseUrl}}/comments/{{commentId}}
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "body": "Edited comment text"
+}
+
+### 30. Comments - Delete Own
+DELETE {{baseUrl}}/comments/{{commentId}}
+Authorization: Bearer {{userToken}}
+
+### 31. Comments - Like / Unlike
+POST {{baseUrl}}/comments/{{commentId}}/like?like=true
+Authorization: Bearer {{userToken}}
+
+### 32. Wishlist - Add
+POST {{baseUrl}}/wishlists
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "bookId": "{{bookId}}"
+}
+
+### 33. Wishlist - List
+GET {{baseUrl}}/wishlists
+Authorization: Bearer {{userToken}}
+
+### 34. Wishlist - Remove by Book
+DELETE {{baseUrl}}/wishlists/{{wishlistBookId}}
+Authorization: Bearer {{userToken}}
+
+### 35. Library - List
+GET {{baseUrl}}/library
+Authorization: Bearer {{userToken}}
+
+### 36. Library - Add
+POST {{baseUrl}}/library
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "bookId": "{{bookId}}",
+  "source": "order"
+}
+
+### 37. Library - Remove Entry
+DELETE {{baseUrl}}/library/{{libraryEntryId}}
+Authorization: Bearer {{userToken}}
+
+### 38. Orders - Create
+POST {{baseUrl}}/orders
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "cartId": "ACTIVE_CART_ID",
+  "shippingAddress": "123 Sample Street"
+}
+
+### 39. Orders - List (Admin)
+GET {{baseUrl}}/orders?page=1&size=10
+Authorization: Bearer {{adminToken}}
+
+### 40. Orders - Mine
+GET {{baseUrl}}/orders/mine
+Authorization: Bearer {{userToken}}
+
+### 41. Orders - Detail
+GET {{baseUrl}}/orders/{{orderId}}
+Authorization: Bearer {{userToken}}
+
+### 42. Orders - Update Status
+PATCH {{baseUrl}}/orders/{{orderId}}/status
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "FULFILLED"
+}
+
+### 43. Orders - Cancel
+DELETE {{baseUrl}}/orders/{{orderId}}
+Authorization: Bearer {{userToken}}
+
+### 44. Orders - Items
+GET {{baseUrl}}/orders/{{orderId}}/items
+Authorization: Bearer {{userToken}}
+
+### 45. Reviews - List (Admin)
+GET {{baseUrl}}/reviews?page=1&size=10
+Authorization: Bearer {{adminToken}}
+
+### 46. Reviews - Top
+GET {{baseUrl}}/reviews/top?limit=5&sort=likeCount
+
+### 47. Reviews - Detail
+GET {{baseUrl}}/reviews/{{reviewId}}
+
+### 48. Reviews - Update Own
+PATCH {{baseUrl}}/reviews/{{reviewId}}
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "rating": 4,
+  "title": "Edited review",
+  "body": "Updated review body."
+}
+
+### 49. Reviews - Delete Own
+DELETE {{baseUrl}}/reviews/{{reviewId}}
+Authorization: Bearer {{userToken}}
+
+### 50. Reviews - Moderate (Admin)
+PATCH {{baseUrl}}/reviews/{{reviewId}}/status
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "hidden": true
+}
+
+### 51. Reviews - Like
+POST {{baseUrl}}/reviews/{{reviewId}}/likes
+Authorization: Bearer {{userToken}}
+
+### 52. Reviews - Remove Like
+DELETE {{baseUrl}}/reviews/{{reviewId}}/likes
+Authorization: Bearer {{userToken}}
+
+### 53. Stats - Overview (Admin)
+GET {{baseUrl}}/stats/overview
+Authorization: Bearer {{adminToken}}
+
+### 54. Stats - Top Books
+GET {{baseUrl}}/stats/top-books
+Authorization: Bearer {{adminToken}}
+
+### 55. Stats - Daily Sales
+GET {{baseUrl}}/stats/daily-sales
+Authorization: Bearer {{adminToken}}
+
+### 56. Users - Register
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "Passw0rd!",
+  "name": "New User"
+}
+
+### 57. Users - List (Admin)
+GET {{baseUrl}}/users?page=1&size=10
+Authorization: Bearer {{adminToken}}
+
+### 58. Users - Me
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{userToken}}
+
+### 59. Users - Update Profile
+PATCH {{baseUrl}}/users/me
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Name",
+  "region": "Seoul"
+}
+
+### 60. Users - My Reviews
+GET {{baseUrl}}/users/me/reviews?page=1&limit=5
+Authorization: Bearer {{userToken}}
+
+### 61. Users - My Likes
+GET {{baseUrl}}/users/me/likes?page=1&size=5&type=review
+Authorization: Bearer {{userToken}}
+
+### 62. Users - Delete Me
+DELETE {{baseUrl}}/users/me
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "password": "Passw0rd!"
+}
+
+### 63. Users - Detail (Admin)
+GET {{baseUrl}}/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+
+### 64. Users - Update (Admin)
+PATCH {{baseUrl}}/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "ACTIVE"
+}
+
+### 65. Users - Delete (Admin)
+DELETE {{baseUrl}}/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+
+### 66. Users - Change Role
+PATCH {{baseUrl}}/users/{{userId}}/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "ADMIN"
+}
+
+### 67. Users - Deactivate
+PATCH {{baseUrl}}/users/{{userId}}/deactivate
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "SUSPENDED"
+}
+
+### 68. Users - Orders for User
+GET {{baseUrl}}/users/{{userId}}/orders
+Authorization: Bearer {{adminToken}}
+
+### 69. Users - Reviews for User
+GET {{baseUrl}}/users/{{userId}}/reviews
+Authorization: Bearer {{adminToken}}

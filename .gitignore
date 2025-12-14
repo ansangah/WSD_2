@@ -1,0 +1,43 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+*.dylib
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+coverage/
+
+# Node
+node_modules/
+pnpm-lock.yaml
+npm-debug.log*
+.turbo/
+
+# Editor settings
+.vscode/
+.idea/
+
+# Local data
+.env
+.coverage
+coverage.xml
+htmlcov/
+
+# Alembic
+alembic/versions/__pycache__/
+
+# macOS
+.DS_Store
+
+/src/generated/prisma

@@ -1,0 +1,323 @@
+// Prisma schema aligned with the bookstore ERD
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  CURATOR
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum CartStatus {
+  ACTIVE
+  CHECKED_OUT
+  ABANDONED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FULFILLED
+  CANCELLED
+  REFUNDED
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  passwordHash   String
+  name           String
+  birthDate      DateTime?
+  gender         String?
+  phone          String?
+  role           UserRole        @default(USER)
+  status         UserStatus      @default(ACTIVE)
+  region         String?
+  lastLoginAt    DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  deletedAt      DateTime?
+  refreshTokens  RefreshToken[]
+  wishlists      Wishlist[]
+  libraryEntries UserLibrary[]
+  carts          Cart[]
+  orders         Order[]
+  reviews        Review[]
+  reviewLikes    ReviewLike[]
+  comments       Comment[]
+  commentLikes   CommentLike[]
+  activityLogs   ActivityLog[]
+
+  @@index([email])
+  @@index([role])
+  @@index([status])
+}
+
+model RefreshToken {
+  id         String   @id @default(cuid())
+  token      String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  userAgent  String?
+  deviceInfo String?
+  ipAddress  String?
+  expiresAt  DateTime
+  revoked    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Category {
+  id        String        @id @default(cuid())
+  name      String        @unique
+  parentId  String?
+  parent    Category?     @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children  Category[]    @relation("CategoryHierarchy")
+  books     BookCategory[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Author {
+  id        String       @id @default(cuid())
+  name      String
+  biography String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  books     BookAuthor[]
+
+  @@index([name])
+}
+
+model Book {
+  id             String         @id @default(cuid())
+  isbn13         String?        @unique
+  title          String
+  description String? @db.Text
+  price          Decimal        @db.Decimal(10, 2)
+  stock          Int
+  languageCode   String?
+  pageCount      Int?
+  coverUrl       String?
+  publishedAt    DateTime?
+  avgRating      Decimal        @db.Decimal(3, 2) @default(0)
+  reviewCount    Int            @default(0)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  deletedAt      DateTime?
+  authors        BookAuthor[]
+  categories     BookCategory[]
+  reviews        Review[]
+  orderItems     OrderItem[]
+  cartItems      CartItem[]
+  wishlistItems  Wishlist[]
+  libraryEntries UserLibrary[]
+
+  @@index([title])
+  @@index([publishedAt])
+}
+
+model BookAuthor {
+  id        String @id @default(cuid())
+  bookId    String
+  authorId  String
+  authorOrder Int? @default(1)
+  book      Book   @relation(fields: [bookId], references: [id])
+  author    Author @relation(fields: [authorId], references: [id])
+
+  @@unique([bookId, authorId])
+}
+
+model BookCategory {
+  id         String   @id @default(cuid())
+  bookId     String
+  categoryId String
+  book       Book     @relation(fields: [bookId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([bookId, categoryId])
+  @@index([categoryId])
+}
+
+model Review {
+  id           String        @id @default(cuid())
+  rating       Int
+  title        String?
+  body         String   @db.Text 
+  likeCount    Int           @default(0)
+  commentCount Int           @default(0)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  bookId       String
+  book         Book          @relation(fields: [bookId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  likes        ReviewLike[]
+  comments     Comment[]
+
+  @@index([bookId])
+  @@index([userId])
+}
+
+model ReviewLike {
+  id        String   @id @default(cuid())
+  reviewId  String
+  userId    String
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
+  review    Review   @relation(fields: [reviewId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([reviewId, userId])
+}
+
+model Comment {
+  id               String        @id @default(cuid())
+  reviewId         String
+  userId           String
+  parentCommentId  String?
+  body             String
+  likeCount        Int           @default(0)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  deletedAt        DateTime?
+  review           Review        @relation(fields: [reviewId], references: [id])
+  user             User          @relation(fields: [userId], references: [id])
+  parent           Comment?      @relation("CommentHierarchy", fields: [parentCommentId], references: [id])
+  replies          Comment[]     @relation("CommentHierarchy")
+  likes            CommentLike[]
+
+  @@index([reviewId])
+  @@index([userId])
+}
+
+model CommentLike {
+  id         String   @id @default(cuid())
+  commentId  String
+  userId     String
+  createdAt  DateTime @default(now())
+  deletedAt  DateTime?
+  comment    Comment  @relation(fields: [commentId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([commentId, userId])
+}
+
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
+  user      User     @relation(fields: [userId], references: [id])
+  book      Book     @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId])
+}
+
+model UserLibrary {
+  id         String   @id @default(cuid())
+  userId     String
+  bookId     String
+  acquiredAt DateTime @default(now())
+  source     String?
+  user       User     @relation(fields: [userId], references: [id])
+  book       Book     @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId])
+}
+
+model Cart {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+  status    CartStatus  @default(ACTIVE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  deletedAt DateTime?
+  items     CartItem[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id])
+  bookId    String
+  book      Book     @relation(fields: [bookId], references: [id])
+  quantity  Int
+  unitPrice Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([cartId])
+  @@index([bookId])
+}
+
+model Order {
+  id                     String      @id @default(cuid())
+  userId                 String
+  user                   User        @relation(fields: [userId], references: [id])
+  status                 OrderStatus @default(PENDING)
+  itemTotal              Decimal     @db.Decimal(12, 2)
+  discountTotal          Decimal     @db.Decimal(12, 2) @default(0)
+  shippingFee            Decimal     @db.Decimal(12, 2) @default(0)
+  totalAmount            Decimal     @db.Decimal(12, 2)
+  cancelledAt            DateTime?
+  customerNameSnapshot   String
+  customerEmailSnapshot  String
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+  items                  OrderItem[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id            String   @id @default(cuid())
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id])
+  bookId        String
+  book          Book     @relation(fields: [bookId], references: [id])
+  titleSnapshot String
+  unitPrice     Decimal  @db.Decimal(10, 2)
+  quantity      Int
+  subtotal      Decimal  @db.Decimal(12, 2)
+
+  @@index([orderId])
+  @@index([bookId])
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  ip        String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

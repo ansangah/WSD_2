@@ -1,0 +1,33 @@
+import type { Express } from "express";
+import { healthRouter } from "@modules/health/health.router";
+import { authRouter } from "@modules/auth/auth.router";
+import { usersRouter } from "@modules/users/users.router";
+import { categoriesRouter } from "@modules/categories/categories.router";
+import { booksRouter, adminBooksRouter } from "@modules/books/books.router";
+import { ordersRouter } from "@modules/orders/orders.router";
+import { reviewsRouter } from "@modules/reviews/reviews.router";
+import { statsRouter } from "@modules/stats/stats.router";
+import { wishlistsRouter } from "@modules/wishlists/wishlists.router";
+import { cartsRouter } from "@modules/carts/carts.router";
+import { libraryRouter } from "@modules/library/library.router";
+import { commentsRouter } from "@modules/comments/comments.router";
+import { authorsRouter } from "@modules/authors/authors.router";
+import { activityLogsRouter } from "@modules/activity-logs/activity-logs.router";
+
+export const registerRoutes = (app: Express) => {
+  app.use("/health", healthRouter);
+  app.use("/auth", authRouter);
+  app.use("/users", usersRouter);
+  app.use("/categories", categoriesRouter);
+  app.use("/books", booksRouter);
+  app.use("/admin/books", adminBooksRouter);
+  app.use("/orders", ordersRouter);
+  app.use("/reviews", reviewsRouter);
+  app.use("/wishlists", wishlistsRouter);
+  app.use("/carts", cartsRouter);
+  app.use("/library", libraryRouter);
+  app.use("/", commentsRouter);
+  app.use("/authors", authorsRouter);
+  app.use("/activity-logs", activityLogsRouter);
+  app.use("/stats", statsRouter);
+};
