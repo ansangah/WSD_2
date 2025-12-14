@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "PRISMA_CLIENT_ENGINE_TYPE=binary ts-node-dev --respawn --transpile-only --files -r tsconfig-paths/register --project tsconfig.json src/main.ts",
-    "build": "prisma generate && tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && tsc-alias",
     "start": "PRISMA_CLIENT_ENGINE_TYPE=binary node dist/main.js",
     "lint": "tsc --noEmit",
     "prisma:generate": "prisma generate",
