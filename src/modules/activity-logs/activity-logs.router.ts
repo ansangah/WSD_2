@@ -16,7 +16,7 @@ registry.registerPath({
   method: "get",
   path: "/activity-logs",
   tags: ["Activity Logs"],
-  summary: "List audit logs (admin)",
+  summary: "감사 로그 목록 조회(관리자)",
   security: [{ bearerAuth: [] }],
   request: {
     query: activityLogQuerySchema
@@ -24,7 +24,7 @@ registry.registerPath({
   responses: {
     ...commonErrorResponses(),
     200: {
-      description: "Logs",
+      description: "로그",
       content: {
         "application/json": {
           schema: paginatedActivityLogSchema

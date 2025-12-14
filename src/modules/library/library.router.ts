@@ -20,7 +20,7 @@ registry.registerPath({
   method: "get",
   path: "/library",
   tags: ["Library"],
-  summary: "List owned books",
+  summary: "보유 도서 목록",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -44,7 +44,7 @@ registry.registerPath({
   method: "post",
   path: "/library",
   tags: ["Library"],
-  summary: "Add a book to library",
+  summary: "라이브러리에 도서 추가",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -90,7 +90,7 @@ registry.registerPath({
   method: "delete",
   path: "/library/{id}",
   tags: ["Library"],
-  summary: "Remove library entry",
+  summary: "라이브러리 항목 삭제",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }

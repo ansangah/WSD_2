@@ -16,7 +16,7 @@ registry.registerPath({
   method: "get",
   path: "/authors",
   tags: ["Authors"],
-  summary: "List authors with pagination",
+  summary: "페이지네이션 포함 작가 목록",
   request: {
     query: authorQuerySchema
   },
@@ -46,7 +46,7 @@ registry.registerPath({
   method: "get",
   path: "/authors/{id}",
   tags: ["Authors"],
-  summary: "Get author detail",
+  summary: "작가 상세 조회",
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],

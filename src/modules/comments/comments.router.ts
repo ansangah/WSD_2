@@ -25,7 +25,7 @@ registry.registerPath({
   method: "get",
   path: "/reviews/{reviewId}/comments",
   tags: ["Comments"],
-  summary: "List comments for a review",
+  summary: "리뷰 댓글 목록",
   parameters: [
     { name: "reviewId", in: "path", required: true, schema: { type: "string" } }
   ],
@@ -61,7 +61,7 @@ registry.registerPath({
   method: "post",
   path: "/reviews/{reviewId}/comments",
   tags: ["Comments"],
-  summary: "Create review comment",
+  summary: "리뷰 댓글 작성",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "reviewId", in: "path", required: true, schema: { type: "string" } }
@@ -110,7 +110,7 @@ registry.registerPath({
   method: "patch",
   path: "/comments/{id}",
   tags: ["Comments"],
-  summary: "Update own comment",
+  summary: "내 댓글 수정",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -158,7 +158,7 @@ registry.registerPath({
   method: "delete",
   path: "/comments/{id}",
   tags: ["Comments"],
-  summary: "Delete own comment",
+  summary: "내 댓글 삭제",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -188,7 +188,7 @@ registry.registerPath({
   method: "post",
   path: "/comments/{id}/like",
   tags: ["Comments"],
-  summary: "Like or unlike a comment",
+  summary: "댓글 좋아요/취소",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }

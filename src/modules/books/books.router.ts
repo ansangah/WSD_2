@@ -36,7 +36,7 @@ registry.registerPath({
   method: "get",
   path: "/books",
   tags: ["Books"],
-  summary: "List books with pagination, filters, and sorting",
+  summary: "페이지네이션·필터·정렬 포함 도서 목록",
   request: {
     query: bookQuerySchema
   },
@@ -66,7 +66,7 @@ registry.registerPath({
   method: "post",
   path: "/admin/books",
   tags: ["Books"],
-  summary: "Create book",
+  summary: "도서 등록",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -109,7 +109,7 @@ registry.registerPath({
   method: "get",
   path: "/books/{id}",
   tags: ["Books"],
-  summary: "Get book detail",
+  summary: "도서 상세 조회",
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
@@ -135,7 +135,7 @@ registry.registerPath({
   method: "patch",
   path: "/admin/books/{id}",
   tags: ["Books"],
-  summary: "Update book",
+  summary: "도서 정보 수정",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -180,7 +180,7 @@ registry.registerPath({
   method: "delete",
   path: "/admin/books/{id}",
   tags: ["Books"],
-  summary: "Archive book",
+  summary: "도서 아카이브",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -205,7 +205,7 @@ registry.registerPath({
   method: "get",
   path: "/books/{id}/reviews",
   tags: ["Books", "Reviews"],
-  summary: "List reviews for book",
+  summary: "도서 리뷰 목록",
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
@@ -260,7 +260,7 @@ registry.registerPath({
   method: "post",
   path: "/books/{id}/reviews",
   tags: ["Books", "Reviews"],
-  summary: "Create review for book",
+  summary: "도서 리뷰 작성",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -315,7 +315,7 @@ registry.registerPath({
   method: "get",
   path: "/books/{id}/related",
   tags: ["Books"],
-  summary: "Related books",
+  summary: "관련 도서",
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],

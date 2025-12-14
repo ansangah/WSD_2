@@ -17,7 +17,7 @@ registry.registerPath({
   method: "post",
   path: "/auth/login",
   tags: ["Auth"],
-  summary: "Authenticate user",
+  summary: "사용자 로그인",
   request: {
     body: {
       content: {
@@ -30,7 +30,7 @@ registry.registerPath({
   responses: {
     ...commonErrorResponses(),
     200: {
-      description: "Tokens issued",
+      description: "토큰 발급",
       content: {
         "application/json": {
           schema: authResponseSchema
@@ -38,7 +38,7 @@ registry.registerPath({
       }
     },
     401: {
-      description: "Invalid credentials",
+      description: "인증 정보가 유효하지 않습니다.",
       content: {
         "application/json": {
           schema: errorResponseSchema
@@ -84,7 +84,7 @@ registry.registerPath({
   method: "post",
   path: "/auth/refresh",
   tags: ["Auth"],
-  summary: "Refresh JWT tokens",
+  summary: "JWT 토큰 갱신",
   request: {
     body: {
       content: {
@@ -132,7 +132,7 @@ registry.registerPath({
   method: "post",
   path: "/auth/logout",
   tags: ["Auth"],
-  summary: "Logout and revoke refresh token",
+  summary: "로그아웃 및 리프레시 토큰 취소",
   request: {
     body: {
       content: {

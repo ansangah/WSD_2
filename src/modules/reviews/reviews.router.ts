@@ -27,7 +27,7 @@ registry.registerPath({
   method: "get",
   path: "/reviews",
   tags: ["Reviews"],
-  summary: "List reviews (admin)",
+  summary: "리뷰 목록 조회(관리자)",
   security: [{ bearerAuth: [] }],
   request: {
     query: reviewQuerySchema
@@ -66,7 +66,7 @@ registry.registerPath({
   method: "get",
   path: "/reviews/top",
   tags: ["Reviews"],
-  summary: "Top liked reviews",
+  summary: "좋아요 많은 리뷰",
   request: {
     query: topReviewsQuerySchema
   },
@@ -98,7 +98,7 @@ registry.registerPath({
   method: "get",
   path: "/reviews/{id}",
   tags: ["Reviews"],
-  summary: "Get review detail",
+  summary: "리뷰 상세 조회",
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
@@ -124,7 +124,7 @@ registry.registerPath({
   method: "patch",
   path: "/reviews/{id}",
   tags: ["Reviews"],
-  summary: "Update own review",
+  summary: "내 리뷰 수정",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -172,7 +172,7 @@ registry.registerPath({
   method: "delete",
   path: "/reviews/{id}",
   tags: ["Reviews"],
-  summary: "Delete own review",
+  summary: "내 리뷰 삭제",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -194,7 +194,7 @@ registry.registerPath({
   method: "patch",
   path: "/reviews/{id}/status",
   tags: ["Reviews"],
-  summary: "Moderate review",
+  summary: "리뷰 상태 조정",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -238,7 +238,7 @@ registry.registerPath({
   method: "post",
   path: "/reviews/{id}/likes",
   tags: ["Reviews"],
-  summary: "Like review",
+  summary: "리뷰 좋아요",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -268,7 +268,7 @@ registry.registerPath({
   method: "delete",
   path: "/reviews/{id}/likes",
   tags: ["Reviews"],
-  summary: "Remove like from review",
+  summary: "리뷰 좋아요 취소",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }

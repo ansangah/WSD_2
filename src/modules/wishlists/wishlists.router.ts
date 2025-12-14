@@ -22,7 +22,7 @@ registry.registerPath({
   method: "post",
   path: "/wishlists",
   tags: ["Wishlists"],
-  summary: "Add book to wishlist",
+  summary: "위시리스트에 도서 추가",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -76,7 +76,7 @@ registry.registerPath({
   method: "get",
   path: "/wishlists",
   tags: ["Wishlists"],
-  summary: "List wishlist items",
+  summary: "위시리스트 항목 조회",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -103,7 +103,7 @@ registry.registerPath({
   method: "delete",
   path: "/wishlists/{bookId}",
   tags: ["Wishlists"],
-  summary: "Remove item from wishlist",
+  summary: "위시리스트 항목 제거",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "bookId", in: "path", required: true, schema: { type: "string" } }

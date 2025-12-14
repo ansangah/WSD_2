@@ -27,7 +27,7 @@ registry.registerPath({
   method: "get",
   path: "/health",
   tags: ["Health"],
-  summary: "Service health information",
+  summary: "서비스 상태 정보",
   responses: {
     ...commonErrorResponses(),
     200: {

@@ -23,7 +23,7 @@ registry.registerPath({
   method: "get",
   path: "/stats/overview",
   tags: ["Stats"],
-  summary: "Global KPIs",
+  summary: "전사 KPI",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -59,7 +59,7 @@ registry.registerPath({
   method: "get",
   path: "/stats/top-books",
   tags: ["Stats"],
-  summary: "Top selling books",
+  summary: "판매 상위 도서",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -102,7 +102,7 @@ registry.registerPath({
   method: "get",
   path: "/stats/daily-sales",
   tags: ["Stats"],
-  summary: "Daily revenue (last 14 days)",
+  summary: "일별 매출(최근 14일)",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),

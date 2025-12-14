@@ -41,38 +41,41 @@ const errorExamples: Record<
     path: EXAMPLE_PATH,
     status: 400,
     code: ERROR_CODES.BAD_REQUEST,
-    message: "Bad request",
-    details: { reason: "Invalid query parameter" }
+    message: "잘못된 요청",
+    details: { reason: "쿼리 파라미터 형식이 잘못되었습니다." }
   },
   401: {
     timestamp: EXAMPLE_TIMESTAMP,
     path: EXAMPLE_PATH,
     status: 401,
     code: ERROR_CODES.UNAUTHORIZED,
-    message: "Unauthorized"
+    message: "인증되지 않았습니다."
   },
   403: {
     timestamp: EXAMPLE_TIMESTAMP,
     path: EXAMPLE_PATH,
     status: 403,
     code: ERROR_CODES.FORBIDDEN,
-    message: "Forbidden"
+    message: "접근 권한이 없습니다."
   },
   404: {
     timestamp: EXAMPLE_TIMESTAMP,
     path: EXAMPLE_PATH,
     status: 404,
     code: ERROR_CODES.RESOURCE_NOT_FOUND,
-    message: "The requested resource could not be found"
+    message: "요청한 리소스를 찾을 수 없습니다."
   },
   422: {
     timestamp: EXAMPLE_TIMESTAMP,
     path: EXAMPLE_PATH,
     status: 422,
     code: ERROR_CODES.VALIDATION_FAILED,
-    message: "Validation failed",
+    message: "유효성 검사가 실패했습니다.",
     details: {
-      fieldErrors: { email: ["Invalid email"], password: ["Too short"] }
+      fieldErrors: {
+        email: ["잘못된 이메일 형식"],
+        password: ["비밀번호가 너무 짧습니다"]
+      }
     }
   },
   500: {
@@ -80,7 +83,7 @@ const errorExamples: Record<
     path: EXAMPLE_PATH,
     status: 500,
     code: ERROR_CODES.INTERNAL_SERVER_ERROR,
-    message: "Unexpected error"
+    message: "예상치 못한 오류가 발생했습니다."
   }
 };
 
@@ -102,12 +105,12 @@ const errorResponse = (
 });
 
 export const commonErrorResponses = () => ({
-  400: errorResponse(400, "Bad request"),
-  401: errorResponse(401, "Unauthorized"),
-  403: errorResponse(403, "Forbidden"),
-  404: errorResponse(404, "Not found"),
-  422: errorResponse(422, "Validation failed"),
-  500: errorResponse(500, "Internal server error")
+  400: errorResponse(400, "잘못된 요청"),
+  401: errorResponse(401, "인증 실패"),
+  403: errorResponse(403, "접근 권한 없음"),
+  404: errorResponse(404, "찾을 수 없음"),
+  422: errorResponse(422, "요청 처리 불가"),
+  500: errorResponse(500, "서버 내부 오류")
 });
 
 export const getOpenApiDocument = () => {
@@ -115,19 +118,18 @@ export const getOpenApiDocument = () => {
   const baseDocument = generator.generateDocument({
     openapi: "3.1.0",
     info: {
-      title: "WSD Assignment API",
+      title: "WSD 과제 API",
       version: "1.0.0",
-      description:
-        "Comprehensive bookstore API implementing authentication, RBAC, pagination, validation, and statistics."
+      description: "서점 API 명세입니다."
     },
     servers: [
       {
         url: "http://113.198.66.68:10237",
-        description: "JCloud deployment"
+        description: "JCloud 배포본"
       },
       {
         url: "http://localhost:{port}",
-        description: "Local development",
+        description: "로컬 개발 환경",
         variables: {
           port: {
             default: env.PORT.toString()

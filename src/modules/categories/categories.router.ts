@@ -25,7 +25,7 @@ registry.registerPath({
   method: "get",
   path: "/categories",
   tags: ["Categories"],
-  summary: "List categories",
+  summary: "카테고리 목록",
   responses: {
     ...commonErrorResponses(),
     200: {
@@ -48,7 +48,7 @@ registry.registerPath({
   method: "post",
   path: "/categories",
   tags: ["Categories"],
-  summary: "Create category",
+  summary: "카테고리 생성",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -91,7 +91,7 @@ registry.registerPath({
   method: "get",
   path: "/categories/{id}",
   tags: ["Categories"],
-  summary: "Get category",
+  summary: "카테고리 상세",
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
@@ -125,7 +125,7 @@ registry.registerPath({
   method: "patch",
   path: "/categories/{id}",
   tags: ["Categories"],
-  summary: "Update category",
+  summary: "카테고리 수정",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -170,7 +170,7 @@ registry.registerPath({
   method: "delete",
   path: "/categories/{id}",
   tags: ["Categories"],
-  summary: "Delete category",
+  summary: "카테고리 삭제",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -198,7 +198,7 @@ registry.registerPath({
   method: "get",
   path: "/categories/{id}/books",
   tags: ["Categories"],
-  summary: "List books in category",
+  summary: "카테고리별 도서 목록",
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],

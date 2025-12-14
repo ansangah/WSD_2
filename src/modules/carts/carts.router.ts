@@ -22,7 +22,7 @@ registry.registerPath({
   method: "get",
   path: "/carts/me",
   tags: ["Carts"],
-  summary: "Get current user's active cart",
+  summary: "사용자 장바구니 조회",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -46,7 +46,7 @@ registry.registerPath({
   method: "post",
   path: "/carts/me/items",
   tags: ["Carts"],
-  summary: "Add item to cart",
+  summary: "장바구니에 항목 추가",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -91,7 +91,7 @@ registry.registerPath({
   method: "patch",
   path: "/carts/me/items/{itemId}",
   tags: ["Carts"],
-  summary: "Update cart item quantity",
+  summary: "장바구니 수량 수정",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "itemId", in: "path", required: true, schema: { type: "string" } }
@@ -139,7 +139,7 @@ registry.registerPath({
   method: "delete",
   path: "/carts/me/items/{itemId}",
   tags: ["Carts"],
-  summary: "Remove cart item",
+  summary: "장바구니 항목 제거",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "itemId", in: "path", required: true, schema: { type: "string" } }
@@ -169,7 +169,7 @@ registry.registerPath({
   method: "delete",
   path: "/carts/me",
   tags: ["Carts"],
-  summary: "Clear cart",
+  summary: "장바구니 비우기",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),

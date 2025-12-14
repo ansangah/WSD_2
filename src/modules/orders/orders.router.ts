@@ -28,7 +28,7 @@ registry.registerPath({
   method: "post",
   path: "/orders",
   tags: ["Orders"],
-  summary: "Create order",
+  summary: "주문 생성",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -73,7 +73,7 @@ registry.registerPath({
   method: "get",
   path: "/orders",
   tags: ["Orders"],
-  summary: "List orders (admin)",
+  summary: "주문 목록 조회(관리자)",
   security: [{ bearerAuth: [] }],
   request: {
     query: orderQuerySchema
@@ -109,7 +109,7 @@ registry.registerPath({
   method: "get",
   path: "/orders/mine",
   tags: ["Orders"],
-  summary: "Current user orders",
+  summary: "현재 사용자 주문 목록",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -133,7 +133,7 @@ registry.registerPath({
   method: "get",
   path: "/orders/{id}",
   tags: ["Orders"],
-  summary: "Get order details",
+  summary: "주문 상세 조회",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -165,7 +165,7 @@ registry.registerPath({
   method: "patch",
   path: "/orders/{id}/status",
   tags: ["Orders"],
-  summary: "Update order status",
+  summary: "주문 상태 업데이트",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -209,7 +209,7 @@ registry.registerPath({
   method: "delete",
   path: "/orders/{id}",
   tags: ["Orders"],
-  summary: "Cancel order (customer)",
+  summary: "주문 취소(고객)",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -236,7 +236,7 @@ registry.registerPath({
   method: "get",
   path: "/orders/{id}/items",
   tags: ["Orders"],
-  summary: "Order items",
+  summary: "주문 항목",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),

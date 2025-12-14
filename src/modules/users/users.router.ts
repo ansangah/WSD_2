@@ -88,7 +88,7 @@ registry.registerPath({
   method: "post",
   path: "/users",
   tags: ["Users"],
-  summary: "Create a new user account",
+  summary: "사용자 계정 생성",
   request: {
     body: {
       content: {
@@ -136,7 +136,7 @@ registry.registerPath({
   method: "get",
   path: "/users",
   tags: ["Users"],
-  summary: "List users (admin)",
+  summary: "사용자 목록 조회(관리자)",
   security: [{ bearerAuth: [] }],
   request: {
     query: userQuerySchema
@@ -183,7 +183,7 @@ registry.registerPath({
   method: "get",
   path: "/users/me",
   tags: ["Users"],
-  summary: "Current user profile",
+  summary: "현재 사용자 프로필",
   security: [{ bearerAuth: [] }],
   responses: {
     ...commonErrorResponses(),
@@ -218,7 +218,7 @@ registry.registerPath({
   method: "patch",
   path: "/users/me",
   tags: ["Users"],
-  summary: "Update current user profile",
+  summary: "현재 사용자 프로필 수정",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -264,7 +264,7 @@ registry.registerPath({
   method: "get",
   path: "/users/me/reviews",
   tags: ["Users", "Reviews"],
-  summary: "Get my reviews",
+  summary: "내 리뷰 목록",
   security: [{ bearerAuth: [] }],
   request: {
     query: userReviewQuerySchema
@@ -302,7 +302,7 @@ registry.registerPath({
   method: "get",
   path: "/users/me/likes",
   tags: ["Users"],
-  summary: "Get my likes",
+  summary: "내 좋아요 목록",
   security: [{ bearerAuth: [] }],
   request: {
     query: userLikesQuerySchema
@@ -337,7 +337,7 @@ registry.registerPath({
   method: "delete",
   path: "/users/me",
   tags: ["Users"],
-  summary: "Delete current user profile",
+  summary: "현재 사용자 탈퇴",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -395,7 +395,7 @@ registry.registerPath({
   method: "get",
   path: "/users/{id}",
   tags: ["Users"],
-  summary: "Get user by id (admin)",
+  summary: "사용자 상세 조회(관리자)",
   security: [{ bearerAuth: [] }],
   parameters: [
     {
@@ -440,7 +440,7 @@ registry.registerPath({
   method: "patch",
   path: "/users/{id}",
   tags: ["Users"],
-  summary: "Update user (admin)",
+  summary: "사용자 수정(관리자)",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -490,7 +490,7 @@ registry.registerPath({
   method: "delete",
   path: "/users/{id}",
   tags: ["Users"],
-  summary: "Delete user (admin)",
+  summary: "사용자 삭제(관리자)",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -518,7 +518,7 @@ registry.registerPath({
   method: "patch",
   path: "/users/{id}/role",
   tags: ["Users"],
-  summary: "Change user role (admin)",
+  summary: "권한 변경(관리자)",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -563,7 +563,7 @@ registry.registerPath({
   method: "patch",
   path: "/users/{id}/deactivate",
   tags: ["Users"],
-  summary: "Deactivate user (admin)",
+  summary: "사용자 비활성화(관리자)",
   security: [{ bearerAuth: [] }],
   request: {
     body: {
@@ -608,7 +608,7 @@ registry.registerPath({
   method: "get",
   path: "/users/{id}/orders",
   tags: ["Users"],
-  summary: "Fetch user orders (admin)",
+  summary: "사용자 주문 조회(관리자)",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
@@ -660,7 +660,7 @@ registry.registerPath({
   method: "get",
   path: "/users/{id}/reviews",
   tags: ["Users"],
-  summary: "Fetch user reviews (admin)",
+  summary: "사용자 리뷰 조회(관리자)",
   security: [{ bearerAuth: [] }],
   parameters: [
     { name: "id", in: "path", required: true, schema: { type: "string" } }
