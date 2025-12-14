@@ -155,7 +155,7 @@ export const listBooks = async (query: Record<string, string | undefined>) => {
     total,
     page,
     size,
-    `${sortField},${orderDirection}`
+    `${String(sortField)},${orderDirection}`
   );
 };
 
