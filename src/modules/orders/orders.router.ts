@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { registry, errorResponseSchema } from "@config/swagger";
+import { commonErrorResponses, registry, errorResponseSchema } from "@config/swagger";
 import { authenticate, requireRoles } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import {
@@ -40,6 +40,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "Order created",
       content: {
@@ -78,6 +79,7 @@ registry.registerPath({
     query: orderQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Paginated orders",
       content: {
@@ -110,6 +112,7 @@ registry.registerPath({
   summary: "Current user orders",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Orders of current user",
       content: {
@@ -136,6 +139,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Order detail",
       content: {
@@ -175,6 +179,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated order",
       content: {
@@ -207,6 +212,7 @@ registry.registerPath({
   summary: "Cancel order (customer)",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Cancelled order",
       content: {
@@ -233,6 +239,7 @@ registry.registerPath({
   summary: "Order items",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Items",
       content: {

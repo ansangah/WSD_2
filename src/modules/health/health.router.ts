@@ -1,6 +1,6 @@
 import { Router } from "express";
 import os from "node:os";
-import { registry } from "@config/swagger";
+import { commonErrorResponses, registry } from "@config/swagger";
 import { z } from "zod";
 
 const router = Router();
@@ -29,6 +29,7 @@ registry.registerPath({
   tags: ["Health"],
   summary: "Service health information",
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Health status",
       content: {

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { registry, errorResponseSchema } from "@config/swagger";
+import { commonErrorResponses, registry, errorResponseSchema } from "@config/swagger";
 import { authenticate, requireRoles } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import {
@@ -99,6 +99,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "User created",
       content: {
@@ -141,6 +142,7 @@ registry.registerPath({
     query: userQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Paginated user list",
       content: {
@@ -184,6 +186,7 @@ registry.registerPath({
   summary: "Current user profile",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Profile data",
       content: {
@@ -227,6 +230,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Profile updated",
       content: {
@@ -266,6 +270,7 @@ registry.registerPath({
     query: userReviewQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "User reviews with pagination",
       content: {
@@ -303,6 +308,7 @@ registry.registerPath({
     query: userLikesQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Liked reviews/comments",
       content: {
@@ -345,6 +351,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Account deleted",
       content: {
@@ -399,6 +406,7 @@ registry.registerPath({
     }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "User detail",
       content: {
@@ -452,6 +460,7 @@ registry.registerPath({
     }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "User updated",
       content: {
@@ -487,6 +496,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     204: { description: "Deleted" }
   }
 });
@@ -523,6 +533,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Role updated",
       content: {
@@ -567,6 +578,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "User status updated",
       content: {
@@ -602,6 +614,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Orders for user",
       content: {
@@ -653,6 +666,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Reviews for user",
       content: {

@@ -2,6 +2,13 @@
 
 FastAPI 대신 **Express + TypeScript** + **Prisma(PostgreSQL)**로 구현한 전자책/도서 백엔드입니다. JWT 인증, RBAC, 검색/정렬/페이지네이션, 통계, 레이트리밋, Swagger, Postman 컬렉션, 자동화 테스트(21개)를 모두 포함하며 JCloud 배포를 전제로 작성되었습니다.
 
+## DB 선택: PostgreSQL (MySQL 대신)
+
+원 과제 가이드의 예시는 MySQL이지만, 본 프로젝트는 개발/배포의 안정성을 위해 PostgreSQL로 구성했습니다.
+
+- 로컬 환경에서 MySQL 연결/권한 이슈 및 컬럼 길이 제약으로 시드가 자주 실패하는 문제가 있었고, PostgreSQL로 전환해 해결했습니다.
+- Prisma 7 드라이버 어댑터 기반 구성에서 PostgreSQL이 가장 단순하고 재현 가능한 세팅이었습니다.
+
 ## 프로젝트 개요
 
 - 온라인 서점 도메인: 사용자, 카테고리, 도서, 저자, 주문, 리뷰, 통계
@@ -12,6 +19,15 @@ FastAPI 대신 **Express + TypeScript** + **Prisma(PostgreSQL)**로 구현한 �
 - Vitest 21개 테스트 (유틸, 미들웨어, 서비스, 인증)
 
 ## 실행 방법
+
+### 로컬 실행 (예시)
+
+```bash
+npm install
+cp .env.example .env
+npx prisma migrate deploy && npm run seed
+npm run dev
+```
 
 ```bash
 # 1. 의존성 설치
@@ -48,6 +64,7 @@ npx prisma migrate deploy
 npm run seed
 ```
 
+로컬에서는 포트 충돌을 피하기 위해 Docker의 PostgreSQL(컨테이너 5432)을 호스트 `15432`로 바인딩합니다.  
 `docker-compose.yml`에 정의된 계정(`wsd_user/wsd_pass`)은 `.env(.example)`의 `DATABASE_URL`과 동일합니다. 필요한 경우 두 파일을 함께 수정하세요.
 
 ### PM2 / JCloud 예시
@@ -69,14 +86,16 @@ pm2 save
 | `RATE_LIMIT_WINDOW_MS`, `RATE_LIMIT_MAX` | 전역 레이트리밋 설정 |
 | `LOG_LEVEL` | pino 로그 레벨 |
 | `SWAGGER_ENABLED` | `true/false` |
+| `APP_VERSION` | `/health`에 노출되는 앱 버전(선택) |
+| `BUILD_TIME` | `/health`에 노출되는 빌드 시간(선택) |
 
 `.env.example`에 전체 목록과 샘플 값이 포함되어 있습니다.
 
 ## 배포 주소
 
-- **Base URL**: `http://113.198.6.68:1228`
-- **Swagger**: `http://113.198.6.68:1228/docs`
-- **Health**: `http://113.198.6.68:1228/health`
+- **Base URL**: `http://113.198.66.68:10237`
+- **Swagger**: `http://113.198.66.68:10237/docs`
+- **Health**: `http://113.198.66.68:10237/health`
 
 프로덕션 배포 시 포트/도메인 변경이 생기면 이 섹션을 갱신하세요.
 
@@ -135,6 +154,8 @@ PostgreSQL 접속 예: `psql postgresql://wsd_user:***@localhost:15432/wsd_assig
 - `postman/wsd2.postman_collection.json`
     - 환경 변수: `{{baseUrl}}`, `{{accessToken}}`, `{{refreshToken}}`
     - Pre-request 스크립트로 토큰 자동 주입, Tests 탭에서 응답 검증 5개 이상
+- (선택) `postman/wsd2.local.postman_environment.json`
+    - 로컬 실행용 Environment 템플릿(`baseUrl` 등)
 - Swagger `/docs`
     - zod-to-openapi 기반 자동 스키마
     - 401/403/404/422/500 예시 포함

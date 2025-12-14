@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registry } from "@config/swagger";
+import { commonErrorResponses, registry } from "@config/swagger";
 import { validate } from "@middleware/validate";
 import { successResponse } from "@utils/api-response";
 import {
@@ -21,6 +21,7 @@ registry.registerPath({
     query: authorQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Authors",
       content: {
@@ -50,6 +51,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Author detail",
       content: {

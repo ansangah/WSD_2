@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { z } from "zod";
-import { registry } from "@config/swagger";
+import { commonErrorResponses, registry } from "@config/swagger";
 import { authenticate, requireRoles } from "@middleware/auth";
 import { getOverviewStats, getTopBooks, getDailySales } from "./stats.service";
 import { successResponse } from "@utils/api-response";
@@ -26,6 +26,7 @@ registry.registerPath({
   summary: "Global KPIs",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Overview metrics",
       content: {
@@ -61,6 +62,7 @@ registry.registerPath({
   summary: "Top selling books",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Top books",
       content: {
@@ -103,6 +105,7 @@ registry.registerPath({
   summary: "Daily revenue (last 14 days)",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Daily revenue series",
       content: {

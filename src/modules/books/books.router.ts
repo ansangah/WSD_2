@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { registry, errorResponseSchema } from "@config/swagger";
+import { commonErrorResponses, registry, errorResponseSchema } from "@config/swagger";
 import { authenticate, requireRoles } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import {
@@ -41,6 +41,7 @@ registry.registerPath({
     query: bookQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Book list",
       content: {
@@ -77,6 +78,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "Book created",
       content: {
@@ -112,6 +114,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Book detail",
       content: {
@@ -147,6 +150,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Book updated",
       content: {
@@ -182,6 +186,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     204: { description: "Archived" }
   }
 });
@@ -208,6 +213,7 @@ registry.registerPath({
     query: bookReviewsQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Reviews",
       content: {
@@ -269,6 +275,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "Review submitted",
       content: {
@@ -313,6 +320,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Related items",
       content: {

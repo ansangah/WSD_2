@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { registry, errorResponseSchema } from "@config/swagger";
+import { commonErrorResponses, registry, errorResponseSchema } from "@config/swagger";
 import { authenticate } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import { successResponse } from "@utils/api-response";
@@ -34,6 +34,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "Added",
       content: {
@@ -78,6 +79,7 @@ registry.registerPath({
   summary: "List wishlist items",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Wishlist",
       content: {
@@ -107,6 +109,7 @@ registry.registerPath({
     { name: "bookId", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     204: { description: "Removed" }
   }
 });

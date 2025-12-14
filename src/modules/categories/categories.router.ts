@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { registry, errorResponseSchema } from "@config/swagger";
+import { commonErrorResponses, registry, errorResponseSchema } from "@config/swagger";
 import { authenticate, requireRoles } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import {
@@ -27,6 +27,7 @@ registry.registerPath({
   tags: ["Categories"],
   summary: "List categories",
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Category list",
       content: {
@@ -59,6 +60,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "Created",
       content: {
@@ -94,6 +96,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Category",
       content: {
@@ -137,6 +140,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated",
       content: {
@@ -172,6 +176,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     204: { description: "Deleted" }
   }
 });
@@ -198,6 +203,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Book list",
       content: {

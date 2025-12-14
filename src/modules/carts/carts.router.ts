@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registry } from "@config/swagger";
+import { commonErrorResponses, registry } from "@config/swagger";
 import { authenticate } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import { successResponse } from "@utils/api-response";
@@ -25,6 +25,7 @@ registry.registerPath({
   summary: "Get current user's active cart",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Cart",
       content: {
@@ -57,6 +58,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated cart",
       content: {
@@ -104,6 +106,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated cart",
       content: {
@@ -142,6 +145,7 @@ registry.registerPath({
     { name: "itemId", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated cart",
       content: {
@@ -168,6 +172,7 @@ registry.registerPath({
   summary: "Clear cart",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Cleared cart",
       content: {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registry } from "@config/swagger";
+import { commonErrorResponses, registry } from "@config/swagger";
 import { authenticate, requireRoles } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import { successResponse } from "@utils/api-response";
@@ -22,6 +22,7 @@ registry.registerPath({
     query: activityLogQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Logs",
       content: {

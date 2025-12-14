@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { registry } from "@config/swagger";
+import { commonErrorResponses, registry } from "@config/swagger";
 import { authenticate, requireRoles } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import {
@@ -33,6 +33,7 @@ registry.registerPath({
     query: reviewQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Review list",
       content: {
@@ -70,6 +71,7 @@ registry.registerPath({
     query: topReviewsQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Top review list",
       content: {
@@ -101,6 +103,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Review",
       content: {
@@ -136,6 +139,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated review",
       content: {
@@ -174,6 +178,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     204: {
       description: "Deleted"
     }
@@ -203,6 +208,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated review",
       content: {
@@ -238,6 +244,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Review with updated like count",
       content: {
@@ -267,6 +274,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Review with updated like count",
       content: {

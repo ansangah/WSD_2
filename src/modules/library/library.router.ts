@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registry } from "@config/swagger";
+import { commonErrorResponses, registry } from "@config/swagger";
 import { authenticate } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import { successResponse } from "@utils/api-response";
@@ -23,6 +23,7 @@ registry.registerPath({
   summary: "List owned books",
   security: [{ bearerAuth: [] }],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Library entries",
       content: {
@@ -55,6 +56,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "Added",
       content: {
@@ -94,6 +96,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Removed",
       content: {

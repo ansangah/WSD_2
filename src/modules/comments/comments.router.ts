@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { z } from "zod";
-import { registry, errorResponseSchema } from "@config/swagger";
+import { commonErrorResponses, registry, errorResponseSchema } from "@config/swagger";
 import { authenticate } from "@middleware/auth";
 import { validate } from "@middleware/validate";
 import { successResponse } from "@utils/api-response";
@@ -33,6 +33,7 @@ registry.registerPath({
     query: commentQuerySchema
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Comments",
       content: {
@@ -75,6 +76,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     201: {
       description: "Created",
       content: {
@@ -123,6 +125,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated comment",
       content: {
@@ -161,6 +164,7 @@ registry.registerPath({
     { name: "id", in: "path", required: true, schema: { type: "string" } }
   ],
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Deleted",
       content: {
@@ -198,6 +202,7 @@ registry.registerPath({
     })
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Updated comment with like count",
       content: {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { registry, errorResponseSchema } from "@config/swagger";
+import { commonErrorResponses, registry, errorResponseSchema } from "@config/swagger";
 import { validate } from "@middleware/validate";
 import {
   loginSchema,
@@ -28,6 +28,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Tokens issued",
       content: {
@@ -94,6 +95,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     200: {
       description: "Tokens rotated",
       content: {
@@ -141,6 +143,7 @@ registry.registerPath({
     }
   },
   responses: {
+    ...commonErrorResponses(),
     204: {
       description: "Logged out"
     }
