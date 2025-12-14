@@ -18,6 +18,12 @@ FastAPI 대신 **Express + TypeScript** + **Prisma(PostgreSQL)**로 구현한 �
 - Faker 기반 시드 데이터(>200 rows)
 - Vitest 21개 테스트 (유틸, 미들웨어, 서비스, 인증)
 
+## 사전 요구사항
+
+- **Node.js**: Prisma 7 실행을 위해 `>= 24` 권장
+- **npm**: 패키지 설치 및 스크립트 실행
+- **Docker + Docker Compose**: PostgreSQL을 컨테이너로 실행할 경우 필요
+
 ## 실행 방법
 
 ### 로컬 실행 (예시)
