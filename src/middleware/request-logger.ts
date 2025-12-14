@@ -1,6 +1,11 @@
 import pinoHttp from "pino-http";
 import { logger } from "@core/logger";
 
+const getResponseTimeMs = (res: unknown): number | undefined =>
+  typeof (res as { responseTime?: unknown })?.responseTime === "number"
+    ? ((res as { responseTime: number }).responseTime as number)
+    : undefined;
+
 export const requestLogger = pinoHttp({
   logger,
   customAttributeKeys: {
@@ -15,13 +20,19 @@ export const requestLogger = pinoHttp({
     }),
     response: (res) => ({
       statusCode: res.statusCode,
-      responseTime: res.responseTime
+      responseTime: getResponseTimeMs(res)
     })
   },
   customSuccessMessage: function (req, res) {
-    return `HTTP ${req.method} ${req.url} ${res.statusCode} ${res.responseTime}ms`;
+    const responseTime = getResponseTimeMs(res);
+    return `HTTP ${req.method} ${req.url} ${res.statusCode}${
+      responseTime == null ? "" : ` ${responseTime}ms`
+    }`;
   },
   customErrorMessage: function (req, res) {
-    return `HTTP ${req.method} ${req.url} ${res.statusCode} ${res.responseTime}ms`;
+    const responseTime = getResponseTimeMs(res);
+    return `HTTP ${req.method} ${req.url} ${res.statusCode}${
+      responseTime == null ? "" : ` ${responseTime}ms`
+    }`;
   }
 });
